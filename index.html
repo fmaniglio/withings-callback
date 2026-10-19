@@ -1,0 +1,16 @@
+<!doctype html>
+<!-- Withings OAuth relay. Withings will not redirect to localhost, so it redirects here
+     (a public HTTPS page) and this page forwards the ?code=&state= on to the callback
+     server on the box at http://localhost:8766/withings/callback. Nothing is stored or
+     sent anywhere else: no analytics, no external scripts. -->
+<html><head><meta charset="utf-8"><meta name="referrer" content="no-referrer">
+<title>Withings → box</title></head>
+<body><p id="m">Forwarding to the box…</p>
+<script>
+  var q = location.search;
+  if (q.indexOf("code=") >= 0 || q.indexOf("error=") >= 0) {
+    location.replace("http://localhost:8766/withings/callback" + q);
+  } else {
+    document.getElementById("m").textContent = "Withings callback relay (nothing to do).";
+  }
+</script></body></html>
